@@ -1,5 +1,5 @@
 import { PagesComponent } from './pages/pages.component';
-import { NopagefoundComponent } from './pages/nopagefound/nopagefound.component';
+import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { Grafica1Component } from './pages/grafica1/grafica1.component';
 import { ProgressComponent } from './pages/progress/progress.component';
 import { RegisterComponent } from './auth/register/register.component';
