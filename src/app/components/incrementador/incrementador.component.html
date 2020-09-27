@@ -11,7 +11,9 @@
     type="text" 
     class="form-control" 
     placeholder="Progreso"
+    (ngModelChange)="enCambio($event)"
     [(ngModel)]="progreso"
+    [ngClass]="{'is-invalid': progreso>100 || progreso<0}"
     />
     <span class="input-group-btn">
       <button 
