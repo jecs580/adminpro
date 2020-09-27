@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-incrementador',
@@ -6,11 +6,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styles: [
   ]
 })
-export class IncrementadorComponent  {
+export class IncrementadorComponent implements OnInit {
+  ngOnInit() {
+    this.btnClass = `btn ${this.btnClass}`
+  }
 
   @Input('valor') progreso:number=40; 
   /* La variable progreso podra ser establecida desde el padre, ademas podemos asignale un valor 
   para que pueda ser llamado desde el html*/
+  @Input() btnClass:string='btn-primary'; 
+
+
   @Output() valorSalda:EventEmitter<number> = new EventEmitter();
 
   cambiarValor(valor:number){
