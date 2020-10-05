@@ -4,7 +4,9 @@ Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: js
 */
-$(function() {
+// Funcion que se puede usar de manera global
+const cumstomInitFunctions = () =>{
+    $(function() {
     "use strict";
     $(function() {
         $(".preloader").fadeOut();
@@ -155,3 +157,6 @@ $(function() {
     });
 
 });
+}
+
+cumstomInitFunctions();
