@@ -27,7 +27,15 @@ export class PromesasComponent implements OnInit {
       
     });
     console.log('Fin del init');
-    
+    this.geUsers()
+    .then(resp =>console.log(resp));
   }
+  geUsers(){
+    return new Promise(resolve=>{
+      fetch('https://reqres.in/api/users')
+      .then(response=> response.json())
+      .then(body=> resolve(body.data));
+    });
 
+  }
 }
