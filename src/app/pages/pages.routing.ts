@@ -1,3 +1,4 @@
+import { RxjsComponent } from './rxjs/rxjs.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -18,6 +19,7 @@ const routes: Routes = [
             { path:'grafica1', component:Grafica1Component },
             { path:'account-settings', component:AccountSettingsComponent },
             { path:'promesas', component:PromesasComponent },
+            { path:'rxjs', component:RxjsComponent },
             // { path:'',  redirectTo:'/dashboard', pathMatch:'full' }
         ]
     },
