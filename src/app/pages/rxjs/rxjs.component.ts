@@ -33,7 +33,7 @@ export class RxjsComponent implements OnDestroy{
     // Funcion que instancia un observable y transforma la salida.
     return interval(100).pipe(
       // interval es un observable que se ejecutará cada determinado tiempo de manera infinita
-      // take(10), // Especifica el numero de intervalos que hara
+      take(10), // Especifica el numero de intervalos que hara
       map((i) => i + 1), // Especifica que por cada valor encontrado q valor retornara
       filter(valor => valor%2===0),  // Si devuelve false, el operador take no se dispara, 
       //solo hara la cuenta cuando cumpla la condicion
