@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   login(){
     this.usuarioService.loginUsuario(this.loginForm.value)
     .subscribe(res=>{
-      console.log(res);
+      this.router.navigate(['/dashboard']);
     },err=>{
       Swal.fire('Error',err.error.msg,'error');
     }

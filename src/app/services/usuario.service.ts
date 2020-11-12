@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { LoginForm } from './../interfaces/login-form.interface';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -17,5 +18,11 @@ export class UsuarioService {
   }
   loginUsuario(formData:LoginForm){
     return this.http.post(`${base_url}/login`,formData)
+    .pipe(
+      map((resp:any)=>{
+        localStorage.setItem('token',resp.token);
+        return true;
+      })
+    );
   }
 }
