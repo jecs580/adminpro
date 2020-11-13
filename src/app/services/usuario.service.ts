@@ -1,3 +1,4 @@
+import { Usuario } from './../models/usuario.model';
 import { map } from 'rxjs/operators';
 import { LoginForm } from './../interfaces/login-form.interface';
 import { Injectable } from '@angular/core';
@@ -16,8 +17,14 @@ export class UsuarioService {
   crearUsuario(formData:RegisterForm){
     return this.http.post(`${base_url}/users`,formData)
   }
-  loginUsuario(formData:LoginForm){
-    return this.http.post(`${base_url}/login`,formData)
+  loginUsuario(usuario:Usuario, remember:boolean=false){
+    if (remember) {
+      localStorage.setItem('email',usuario.email);
+    }
+    else{
+      localStorage.removeItem('email');
+    }
+    return this.http.post(`${base_url}/login`,usuario)
     .pipe(
       map((resp:any)=>{
         localStorage.setItem('token',resp.token);
