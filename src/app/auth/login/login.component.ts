@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 import { UsuarioService } from './../../services/usuario.service';
 
+declare const gapi:any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.email = localStorage.getItem('email') || '';
+    this.renderButton();
   }
   login(){
     let usuario = new Usuario(null, this.loginForm.value.email, this.loginForm.value.password);
@@ -38,6 +40,25 @@ export class LoginComponent implements OnInit {
     }
     )
     // this.router.navigate(['/dashboard']);
+  }
+  onSuccess(googleUser) {
+    console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    var id_token = googleUser.getAuthResponse().id_token;
+    console.log(id_token);
     
+  }
+  onFailure(error) {
+    console.log(error);
+  }
+  renderButton() {
+    gapi.signin2.render('my-signin2', {
+      'scope': 'profile email',
+      'width': 240,
+      'height': 50,
+      'longtitle': true,
+      'theme': 'dark',
+      'onsuccess': this.onSuccess,
+      'onfailure': this.onFailure
+    });
   }
 }
