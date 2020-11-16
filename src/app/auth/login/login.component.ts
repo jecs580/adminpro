@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
     this.usuarioService.loginUsuario(usuario,this.loginForm.value.remember)
     .subscribe(res=>{
-      this.router.navigate(['/dashboard']);
+      this.router.navigateByUrl('/')
     },err=>{
       Swal.fire('Error',err.error.msg,'error');
     }
@@ -64,12 +64,13 @@ export class LoginComponent implements OnInit {
       });
   };
   attachSignin(element) {
-    console.log(element.id);
     this.auth2.attachClickHandler(element, {},
         (googleUser)=>{
            const id_token = googleUser.getAuthResponse().id_token;
           //  console.log(id_token);
-          this.usuarioService.loginGoogle(id_token);
+          this.usuarioService.loginGoogle(id_token).subscribe(resp=>{
+            this.router.navigateByUrl('/')
+          });
            
         }, (error) =>{
           alert(JSON.stringify(error, undefined, 2));

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -26,7 +27,8 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private usuarioService:UsuarioService
+    private usuarioService:UsuarioService,
+    private router:Router
     ) { }
   crearUsuario(){
     this.formSubmitted=true;
@@ -36,8 +38,7 @@ export class RegisterComponent {
     }
     this.usuarioService.crearUsuario(this.registerForm.value)
     .subscribe(res=>{
-      console.log('usuario creado');
-      console.log(res);
+      this.router.navigateByUrl('/');
     },
     err=> {Swal.fire('Error',err.error.msg,'error');}
     );

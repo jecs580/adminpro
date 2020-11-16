@@ -2,6 +2,9 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+
+import { AuthGuard } from './../guards/auth.guard';
+
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
@@ -12,6 +15,7 @@ const routes: Routes = [
     { 
         // Rutas Privadas
         path:'dashboard', component:PagesComponent, 
+        canActivate:[AuthGuard],
     // Rutas hijas(Secundarias), tambien se llaman rutas por modulo
         children:[
             { path:'', component:DashboardComponent, data:{title:'Dashboard'} },
