@@ -1,20 +1,41 @@
-import { Usuario } from './../models/usuario.model';
 import { catchError, map, tap } from 'rxjs/operators';
-import { LoginForm } from './../interfaces/login-form.interface';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RegisterForm } from '../interfaces/register-form.interface';
 import { environment } from './../../environments/environment';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
+import { LoginForm } from './../interfaces/login-form.interface';
+import { RegisterForm } from '../interfaces/register-form.interface';
+import { Usuario } from './../models/usuario.model';
 const base_url = environment.base_url;
 
+declare const gapi:any;
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
-  constructor(private http: HttpClient) {}
-
+  public auth2:any;
+  constructor(private http: HttpClient, private router:Router, private ngZone:NgZone) {
+    this.googleInit();
+  }
+  googleInit(){
+    gapi.load('auth2', ()=>{
+      this.auth2 = gapi.auth2.init({
+        client_id: '228251880919-krui5doj5ddqe0mmg82usancc8atao4e.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+      });
+    });
+  }
+  logout(){
+    localStorage.removeItem('token');
+   
+    this.auth2.signOut().then(() =>{
+      this.ngZone.run(()=>{
+        this.router.navigateByUrl('/login');
+      })
+    });
+  }
   validarToken():Observable<boolean>{
     const token = localStorage.getItem('token')|| '';
     return this.http.get(`${base_url}/login/renew`,{

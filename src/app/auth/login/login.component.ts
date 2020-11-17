@@ -1,6 +1,6 @@
 import { Usuario } from './../../models/usuario.model';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit {
   public loginForm = this.fb.group({
     email:["",[Validators.required, Validators.email]],
     password:['',Validators.required],
-    remember:[true]
+    remember:[false]
   });
-  constructor(private router:Router,private fb:FormBuilder, private usuarioService:UsuarioService) { }
+  constructor(private router:Router,private fb:FormBuilder, private usuarioService:UsuarioService, private ngZone:NgZone) { }
 
   ngOnInit(): void {
     this.email = localStorage.getItem('email') || '';
@@ -69,7 +69,9 @@ export class LoginComponent implements OnInit {
            const id_token = googleUser.getAuthResponse().id_token;
           //  console.log(id_token);
           this.usuarioService.loginGoogle(id_token).subscribe(resp=>{
-            this.router.navigateByUrl('/')
+            this.ngZone.run(()=>{
+              this.router.navigateByUrl('/');
+            })
           });
            
         }, (error) =>{
