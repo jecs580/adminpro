@@ -20,10 +20,13 @@ export class UsuarioService {
     this.googleInit();
   }
   googleInit(){
-    gapi.load('auth2', ()=>{
-      this.auth2 = gapi.auth2.init({
-        client_id: '228251880919-krui5doj5ddqe0mmg82usancc8atao4e.apps.googleusercontent.com',
-        cookiepolicy: 'single_host_origin',
+    return new Promise(resolve=>{
+      gapi.load('auth2', ()=>{
+        this.auth2 = gapi.auth2.init({
+          client_id: '228251880919-krui5doj5ddqe0mmg82usancc8atao4e.apps.googleusercontent.com',
+          cookiepolicy: 'single_host_origin',
+        });
+        resolve();
       });
     });
   }
