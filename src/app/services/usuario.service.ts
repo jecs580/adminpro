@@ -47,13 +47,13 @@ export class UsuarioService {
         'x-token':token
       }
     }).pipe(
-      tap((resp:any)=>{
+      map((resp:any)=>{
         // console.log(resp);
-        const { email,google,name,role,img,uid} = resp['usuario'];
+        const { email,google,name,role,img='',uid} = resp['usuario'];
         this.user = new Usuario(name,email,'',img,google,role,uid);
         localStorage.setItem('token', resp.token);
+        return true
       }),
-      map(resp=>true),
       catchError(error=>of(false)) // En caso de que no exista el token o sea invalido envaremos como respuesta un false
     );
   }
