@@ -1,3 +1,4 @@
+import { ProfileComponent } from './profile/profile.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -19,9 +20,10 @@ const routes: Routes = [
     // Rutas hijas(Secundarias), tambien se llaman rutas por modulo
         children:[
             { path:'', component:DashboardComponent, data:{title:'Dashboard'} },
-            { path:'progress', component:ProgressComponent, data:{title:'ProgressBar'} },
-            { path:'grafica1', component:Grafica1Component, data:{title:'Gráfica'} },
             { path:'account-settings', component:AccountSettingsComponent, data:{title:'Account Settings'} },
+            { path:'grafica1', component:Grafica1Component, data:{title:'Gráfica'} },
+            { path:'profile', component:ProfileComponent, data:{title:'Perfil de usuario'} },
+            { path:'progress', component:ProgressComponent, data:{title:'ProgressBar'} },
             { path:'promesas', component:PromesasComponent, data:{title:'Promesas'} },
             { path:'rxjs', component:RxjsComponent, data:{title:'Rxjs'} },
             // { path:'',  redirectTo:'/dashboard', pathMatch:'full' }
