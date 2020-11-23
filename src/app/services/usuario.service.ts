@@ -20,6 +20,12 @@ export class UsuarioService {
   constructor(private http: HttpClient, private router:Router, private ngZone:NgZone) {
     this.googleInit();
   }
+  get token():string {
+    return localStorage.getItem('token')|| '';
+  }
+  get uid():string{
+    return this.user.uid || '';
+  }
   googleInit(){
     return new Promise(resolve=>{
       gapi.load('auth2', ()=>{
@@ -41,10 +47,10 @@ export class UsuarioService {
     });
   }
   validarToken():Observable<boolean>{
-    const token = localStorage.getItem('token')|| '';
+    
     return this.http.get(`${base_url}/login/renew`,{
       headers:{
-        'x-token':token
+        'x-token':this.token
       }
     }).pipe(
       map((resp:any)=>{
@@ -60,6 +66,17 @@ export class UsuarioService {
 
   crearUsuario(formData: RegisterForm) {
     return this.http.post(`${base_url}/users`, formData);
+  }
+  actualizarProfile(data:{email:string,name:string,role:string}){
+    data={
+      ...data,
+      role:this.user.role
+    }
+    return this.http.put(`${base_url}/users/${this.uid}`, data,{
+      headers:{
+        'x-token':this.token
+      }
+    });
   }
   loginUsuario(usuario: Usuario, remember: boolean = false) {
     if (remember) {
