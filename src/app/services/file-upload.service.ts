@@ -28,8 +28,11 @@ export class FileUploadService {
         
       });
       const data= await resp.json();
-      console.log(data)
-      return 'nombre de la imagen'
+      if (data.ok) {
+        return data.nombreArchivo;
+      } else {
+        return false;
+      }
     } catch (error) {
       console.log(error);
       return false;
