@@ -1,3 +1,4 @@
+import  Swal  from 'sweetalert2';
 import { FileUploadService } from './../../services/file-upload.service';
 import { Usuario } from './../../models/usuario.model';
 import { UsuarioService } from './../../services/usuario.service';
@@ -29,11 +30,15 @@ export class ProfileComponent implements OnInit {
   actualizarProfile(){
     // console.log(this.profileForm.value);
     this.usuarioService.actualizarProfile(this.profileForm.value)
-    .subscribe(resp=>{
+    .subscribe((resp)=>{
       // console.log(resp);
       const {name, email} = resp['usuario'];
       this.usuario.name = name;
       this.usuario.email = email;
+      Swal.fire('Guardado','Los nuevos cambios fueron guardados','success');
+    },(err)=>{
+      Swal.fire('Error',err.error.msg,'error');
+      // console.log(err.error.msg);
     });
   }
   cambiarImagen(file:File){
@@ -48,6 +53,13 @@ export class ProfileComponent implements OnInit {
   }
   subirImagen(){
     this.fileUploadService.actualizarFoto(this.imagenSubir,'usuarios',this.usuario.uid)
-    .then(img => this.usuario.img = img);
+    .then(img => {
+      this.usuario.img = img
+      Swal.fire('Guardado','La nueva imagen fue guardada','success');
+    }).catch(err=>{
+      console.log(err);
+      Swal.fire('Error',err.error.msg,'error');
+      
+    });
   }
 }
