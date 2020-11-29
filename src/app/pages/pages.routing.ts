@@ -1,3 +1,4 @@
+import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PromesasComponent } from './promesas/promesas.component';
@@ -27,6 +28,9 @@ const routes: Routes = [
             { path:'promesas', component:PromesasComponent, data:{title:'Promesas'} },
             { path:'rxjs', component:RxjsComponent, data:{title:'Rxjs'} },
             // { path:'',  redirectTo:'/dashboard', pathMatch:'full' }
+
+            // Mantenimientos
+            { path:'usuarios', component:UsuariosComponent, data:{title:'Usuarios de aplicación'} },
         ]
     },
 ];
