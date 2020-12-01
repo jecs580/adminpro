@@ -1,3 +1,4 @@
+import { CargarUsuario } from './../interfaces/cargar-usuarios.interface';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -25,6 +26,13 @@ export class UsuarioService {
   }
   get uid():string{
     return this.user.uid || '';
+  }
+  get headers(){
+    return {
+      headers:{
+        'x-token':this.token
+      }
+    }
   }
   googleInit(){
     return new Promise(resolve=>{
@@ -97,5 +105,9 @@ export class UsuarioService {
         localStorage.setItem('token', resp.token);
       })
     );
+  }
+  cargarUsuarios(from:number=0){
+    const url= `${base_url}/users?from=${from}`;
+    return this.http.get<CargarUsuario>(url,this.headers);
   }
 }
