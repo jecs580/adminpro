@@ -12,15 +12,14 @@ export class Usuario{
     ){}
     
     public get imageUrl() : string {
-        if (this.img.includes('https')) {
-            return this.img;
-        }
-        if (this.img) {
-            return `${base_url}/uploads/usuarios/${this.img}`
-        } else{
-
+        if(!this.img){
             return `${base_url}/uploads/usuarios/no-image`
+        }else if (this.img.includes('https')) {
+                return this.img;
+        }else if (this.img) {
+                return `${base_url}/uploads/usuarios/${this.img}`
+            } else{
+                return `${base_url}/uploads/usuarios/no-image`
+            }
         }
-    }
-    
 }
