@@ -12,6 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class UsuariosComponent implements OnInit {
   public totalUsuarios:number= 0;
   public usuarios:Usuario[]=[];
+  public usuariosTemp:Usuario[]=[];
   public desde:number=0;
   public limitmax=false;
   public limitmin=false;
@@ -26,6 +27,7 @@ export class UsuariosComponent implements OnInit {
     .subscribe(({total,usuarios})=>{
       this.totalUsuarios = total;
       this.usuarios=usuarios;
+      this.usuariosTemp=usuarios;
       this.cargando=false;
     });
   }
@@ -44,6 +46,9 @@ export class UsuariosComponent implements OnInit {
     this.cargarUsuarios();
   }
   buscar(termino:string){
+    if(termino.length ===0){
+      return this.usuarios=this.usuariosTemp;
+    }
     this.busquedasService.buscar('usuarios',termino).subscribe(
       resp=>{
         this.usuarios=resp;

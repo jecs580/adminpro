@@ -71,9 +71,11 @@
               </tbody>
             </table>
           </div>
-          <button [disabled]="limitmin" (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button>
-          &nbsp;
-          <button [disabled]="limitmax" (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+          <div *ngIf="txtTermino.value.length===0">
+            <button [disabled]="limitmin" (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button>
+            &nbsp;
+            <button [disabled]="limitmax" (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+          </div>
         </div>
       </div>
     </div>
