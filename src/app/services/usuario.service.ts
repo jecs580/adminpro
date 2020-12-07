@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 import { LoginForm } from './../interfaces/login-form.interface';
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { Usuario } from './../models/usuario.model';
+
+
+
 const base_url = environment.base_url;
 
 declare const gapi:any;
@@ -118,5 +121,10 @@ export class UsuarioService {
         }
       })
     );
+  }
+  eliminarUsuario(usuario:Usuario){
+    console.log(usuario);
+    const url= `${base_url}/users/${usuario.uid}`;
+    return this.http.delete<CargarUsuario>(url,this.headers);
   }
 }
