@@ -82,6 +82,13 @@ export class UsuariosComponent implements OnInit {
           });
       }
     })
+  }
+  cambiarRole(usuario:Usuario){
+    this.usuarioService.guardarProfile(usuario)
+    .subscribe(resp=>{
+      console.log(resp);
+      
+    });
     
   }
 }

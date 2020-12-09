@@ -83,11 +83,7 @@ export class UsuarioService {
       ...data,
       role:this.user.role
     }
-    return this.http.put(`${base_url}/users/${this.uid}`, data,{
-      headers:{
-        'x-token':this.token
-      }
-    });
+    return this.http.put(`${base_url}/users/${this.uid}`, data,this.headers);
   }
   loginUsuario(usuario: Usuario, remember: boolean = false) {
     if (remember) {
@@ -126,5 +122,8 @@ export class UsuarioService {
     console.log(usuario);
     const url= `${base_url}/users/${usuario.uid}`;
     return this.http.delete<CargarUsuario>(url,this.headers);
+  }
+  guardarProfile(usuario:Usuario){
+    return this.http.put(`${base_url}/users/${usuario.uid}`, usuario,this.headers);
   }
 }
