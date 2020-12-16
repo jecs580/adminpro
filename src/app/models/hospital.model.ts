@@ -1,11 +1,11 @@
 interface _HospitalUser{
-    nombre:string;
+    name:string;
     _id:string;
     img:string;
 }
 export class Hospital{
     constructor(
-        public nombre: string,
+        public name: string,
         public _id?: string,
         public img?: string,
         public usuario?: _HospitalUser,
