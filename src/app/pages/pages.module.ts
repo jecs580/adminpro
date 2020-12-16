@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 // Modulos
+import { PipesModule } from './../pipes/pipes.module';
 import { SharedModule } from './../shared/shared.module';
 import { ComponentsModule } from './../components/components.module';
 
@@ -42,7 +43,8 @@ import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
     ReactiveFormsModule,
     SharedModule,
     RouterModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ],
   exports: [
     DashboardComponent,
