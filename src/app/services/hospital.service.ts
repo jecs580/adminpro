@@ -28,4 +28,16 @@ export class HospitalService {
       map((resp:{ok:boolean,hospitales:Hospital[]}) => resp.hospitales)
     )
   }
+  crearHospital(nombre:string){
+    const url= `${base_url}/hospitals`;
+    return this.http.post(url,{nombre},this.headers)
+  }
+  actualizarHospital(_id:string,nombre:string,){
+    const url= `${base_url}/hospitals/${_id}`;
+    return this.http.post(url,{nombre},this.headers)
+  }
+  borrarHospital(_id:string){
+    const url= `${base_url}/hospitals/${_id}`;
+    return this.http.post(url,this.headers)
+  }
 }
