@@ -36,7 +36,9 @@
               </div>
               <div class="col">
                 <div class="text-right">
-                  <button class="btn btn-primary"><i class="fa fa-hospital-o"></i> Crear hospital</button>
+                  <button
+                  (click)="abrirSweetAlert()"
+                   class="btn btn-primary"><i class="fa fa-hospital-o"></i> Crear hospital</button>
                 </div>
               </div>
             </div>
@@ -46,13 +48,14 @@
                   <tr>
                     <th class="w100 text-center">Foto</th>
                     <th>Nombre</th>
-                    <th class="text-nowrap">Acciones</th>
+                    <th class="w100 text-nowrap">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let hospital of hospitales">
                     <td class="text-center">
                       <img 
+                      (click)="abrirModal(hospital)"
                       [src]="hospital.img | imagen:'hospitales'"
                       class="avatar cursor"
                       [alt]="hospital.name">
@@ -64,21 +67,27 @@
                                 [(ngModel)]="hospital.name">
                     </td>
                     <td class="text-nowrap text-center">
-                      <a href="#" data-toggle="tooltip" data-original-title="Guardar cambios">
+                      <a 
+                      (click)="guardarCambios(hospital)"
+                      data-toggle="tooltip"
+                      class="cursor"
+                      data-original-title="Guardar cambios"
+                      >
                         <i class="fa fa-pencil text-inverse m-r-10"></i>
                       </a>
-                      <a href="#" data-toggle="tooltip" data-original-title="Borrar">
+                      <a
+                      (click)="eliminarHospital(hospital)"
+                      data-toggle="tooltip"
+                      data-original-title="Borrar"
+                      class="cursor"
+                      >
                         <i class="fa fa-close text-danger"></i>
                       </a>
                     </td>
                   </tr>
-                  
                 </tbody>
               </table>
             </div>
-            <button class="btn btn-secondary">Anterior</button>
-            &nbsp;
-            <button class="btn btn-secondary">Siguiente</button>
           </div>
         </div>
       </div>
