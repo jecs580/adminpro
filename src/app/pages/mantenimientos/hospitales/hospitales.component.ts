@@ -1,10 +1,13 @@
-import { HospitalService } from './../../../services/hospital.service';
 import { Component, OnInit } from '@angular/core';
-import Swal from 'sweetalert2';
-import { Hospital } from 'src/app/models/hospital.model';
-import { ModalImagenService } from 'src/app/services/modal-imagen.service';
-import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
+
+import { BusquedasService } from './../../../services/busquedas.service';
+import { HospitalService } from './../../../services/hospital.service';
+import { ModalImagenService } from 'src/app/services/modal-imagen.service';
+
+import { Hospital } from 'src/app/models/hospital.model';
 @Component({
   selector: 'app-hospitales',
   templateUrl: './hospitales.component.html',
@@ -15,7 +18,10 @@ export class HospitalesComponent implements OnInit {
   public hospitales:Hospital[]=[];
   public cargando:boolean=true;
   public imgSubs:Subscription;
-  constructor(private hospitalService:HospitalService,private modalImagenService:ModalImagenService) { }
+  constructor(
+    private hospitalService:HospitalService,
+    private modalImagenService:ModalImagenService,
+    private busquedasService:BusquedasService) { }
 
   ngOnInit(): void {
     this.cargarHospitales();
@@ -26,6 +32,16 @@ export class HospitalesComponent implements OnInit {
     .subscribe(img=>{
       this.cargarHospitales();
     })
+  }
+  buscar(termino:string){
+    if(termino.length ===0){
+      return this.cargarHospitales();
+    }
+    this.busquedasService.buscar("hospitales",termino).subscribe(
+      resp=>{
+        this.hospitales = resp
+      }  
+    )
   }
   cargarHospitales(){
     this.cargando=true;
@@ -51,7 +67,7 @@ export class HospitalesComponent implements OnInit {
     })
   }
   async abrirSweetAlert(){
-    const {value} = await Swal.fire<string>({
+    const {value=''} = await Swal.fire<string>({
       title:'Crear hospital',
       text:'Ingrese el nombre del nuevo hospital',
       input: 'text',

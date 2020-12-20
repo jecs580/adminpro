@@ -4,10 +4,10 @@
         <div class="card-body">
           <input
             type="text"
-            name=""
-            id=""
             class="form-control"
             placeholder="Buscar hospital..."
+            #txtTermino
+            (keyup)="buscar(txtTermino.value)"
           />
         </div>
       </div>
@@ -57,7 +57,7 @@
                       <img 
                       (click)="abrirModal(hospital)"
                       [src]="hospital.img | imagen:'hospitales'"
-                      class="avatar cursor"
+                      class="w100 cursor"
                       [alt]="hospital.name">
                     </td>
                     <td>
