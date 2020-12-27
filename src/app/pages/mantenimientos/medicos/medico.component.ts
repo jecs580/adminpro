@@ -1,4 +1,5 @@
-import { Router } from '@angular/router';
+import { delay } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -24,19 +25,42 @@ export class MedicoComponent implements OnInit {
     private fb:FormBuilder,
     private hospitalService:HospitalService,
     private medicoService:MedicoService,
-    private router:Router
+    private router:Router,
+    private activatedRoute:ActivatedRoute
     ) { }
 
   ngOnInit(): void {
-    this.cargarHospitales();
+    this.activatedRoute.params.subscribe(({id})=> this.cargarMedico(id));
+
     this.medicoForm = this.fb.group({
       name:['',Validators.required],
       hospital:['',Validators.required]
     });
+    this.cargarHospitales();
     this.medicoForm.get('hospital').valueChanges
     .subscribe(resp=>{
       this.hospitalSeleccionado=this.hospitales.find(h=>h._id===resp);
       
+    })
+  }
+  cargarMedico(id:string){
+    if(id ==='nuevo'){
+      return;
+    }
+    this.medicoService.recuperMedico(id)
+    .pipe(
+      delay(100)
+    )
+    .subscribe(resp=>{
+      if(!resp){
+        return this.router.navigateByUrl('/dashboard/medicos');
+      }
+      console.log("Medicooooo=>",resp);
+      const {name,hospital:{_id}} = resp;
+      console.log(name, _id);
+      this.medicoSeleccionado = resp;
+      this.medicoForm.setValue({name,hospital:_id});
+      console.log(this.hospitalSeleccionado);
     })
   }
   cargarHospitales(){
