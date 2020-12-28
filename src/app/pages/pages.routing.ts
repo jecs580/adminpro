@@ -1,3 +1,4 @@
+import { BusquedaComponent } from './busqueda/busqueda.component';
 import { MedicoComponent } from './mantenimientos/medicos/medico.component';
 import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
         children:[
             { path:'', component:DashboardComponent, data:{title:'Dashboard'} },
             { path:'account-settings', component:AccountSettingsComponent, data:{title:'Account Settings'} },
+            { path:'buscar/:termino', component:BusquedaComponent, data:{title:' Busquedas'} },
             { path:'grafica1', component:Grafica1Component, data:{title:'Gráfica'} },
             { path:'profile', component:ProfileComponent, data:{title:'Perfil de usuario'} },
             { path:'progress', component:ProgressComponent, data:{title:'ProgressBar'} },
