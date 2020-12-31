@@ -12,8 +12,10 @@ import { Component, OnInit } from '@angular/core';
 export class SidebarComponent implements OnInit {
   public menuItems:any[];
   public usuario:Usuario;
-  constructor(private sideBarService:SidebarService, private usuarioService:UsuarioService) {
-    this.menuItems=sideBarService.menu;
+  constructor(
+    public sideBarService:SidebarService,
+    private usuarioService:UsuarioService) {
+    // this.menuItems=sideBarService.menu;
     // console.log(this.menuItems);
     this.usuario = usuarioService.user;
   }

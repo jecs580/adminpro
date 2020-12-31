@@ -48,8 +48,13 @@ export class UsuarioService {
       });
     });
   }
+  guardarLocalStorage(token:string,menu:any){
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
+  }
   logout(){
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
    
     this.auth2.signOut().then(() =>{
       this.ngZone.run(()=>{
@@ -68,7 +73,7 @@ export class UsuarioService {
         // console.log(resp);
         const { email,google,name,role,img='',uid} = resp['usuario'];
         this.user = new Usuario(name,email,'',img,google,role,uid);
-        localStorage.setItem('token', resp.token);
+        this.guardarLocalStorage(resp.token,resp.menu);
         return true
       }),
       catchError(error=>of(false)) // En caso de que no exista el token o sea invalido envaremos como respuesta un false
@@ -76,7 +81,12 @@ export class UsuarioService {
   }
 
   crearUsuario(formData: RegisterForm) {
-    return this.http.post(`${base_url}/users`, formData);
+    return this.http.post(`${base_url}/users`, formData)
+    .pipe(
+      tap((resp:any)=>{
+        this.guardarLocalStorage(resp.token,resp.menu);
+      })
+    )
   }
   actualizarProfile(data:{email:string,name:string,role:string}){
     data={
@@ -93,7 +103,8 @@ export class UsuarioService {
     }
     return this.http.post(`${base_url}/login`, usuario).pipe(
       map((resp: any) => {
-        localStorage.setItem('token', resp.token);
+        console.log(resp);
+        this.guardarLocalStorage(resp.token,resp.menu);
         return true;
       })
     );
@@ -101,7 +112,7 @@ export class UsuarioService {
   loginGoogle(token) {
     return this.http.post(`${base_url}/login/google`, {token}).pipe(
       tap((resp: any) => {
-        localStorage.setItem('token', resp.token);
+        this.guardarLocalStorage(resp.token,resp.menu);
       })
     );
   }
