@@ -1,3 +1,4 @@
+import { AdminGuard } from './../guards/admin.guard';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 import { MedicoComponent } from './mantenimientos/medicos/medico.component';
 import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
@@ -35,10 +36,12 @@ const routes: Routes = [
             // { path:'',  redirectTo:'/dashboard', pathMatch:'full' }
 
             // Mantenimientos
-            { path:'usuarios', component:UsuariosComponent, data:{title:'Mantenimiento de usuarios'} },
             { path:'hospitales', component:HospitalesComponent, data:{title:'Mantenimiento de hospitales'} },
             { path:'medicos', component:MedicosComponent, data:{title:'Mantenimiento de médicos'} },
             { path:'medico/:id', component:MedicoComponent, data:{title:'Mantenimiento de médicos'} },
+            
+            // Rutas de Admin
+            { path:'usuarios',canActivate:[AdminGuard], component:UsuariosComponent, data:{title:'Mantenimiento de usuarios'} },
         ]
     },
 ];
